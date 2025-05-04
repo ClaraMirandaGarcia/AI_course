@@ -1,0 +1,8 @@
+La ejecución correcta de este Notebook precisa tanto de un entorno python con los paquetes indicados en el fichero requirements.txt, así 
+como de los ficheros presentes en el ManiobrasSimulador.zip
+
+Para establecer el entorno Python, es necesario ejecutar el comando <pip install -r requirements.txt>. Esto se puede hacer tanto con un 
+entorno virtual como con el entorno python de la máquina sobre la que se ejecuta.
+
+En cuanto a los datos de entrada, estos se encuentran en el ManiobrasSimulador.zip. Para que el Notebook pueda acceder a éstos, es necesario
+descomprimir el fichero zip, de tal manera que se respete la jerarquía <./ManiobrasSimulador/Driver{i}/STISIMData_Overtaking.xlsx>, donde el valor de 'i' es un valor numérico entre 1 y 5. Por otro lado, el directorio <./> hace referencia a aquel directorio en el que se encuentre el Notebook.

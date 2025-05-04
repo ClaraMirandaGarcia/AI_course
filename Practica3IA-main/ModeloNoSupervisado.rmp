@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="10.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="10.3.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="42"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="text:process_document_from_file" compatibility="10.0.000" expanded="true" height="82" name="Process Documents from Files" width="90" x="45" y="136">
+        <list key="text_directories">
+          <parameter key="Negocios" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\bbc-train\bbc-train\business"/>
+          <parameter key="Entretenimiento" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\bbc-train\bbc-train\entertainment"/>
+          <parameter key="Politica" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\bbc-train\bbc-train\politics"/>
+          <parameter key="Deportes" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\bbc-train\bbc-train\sports"/>
+          <parameter key="Tecnologia" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\bbc-train\bbc-train\tech"/>
+        </list>
+        <parameter key="file_pattern" value="*"/>
+        <parameter key="extract_text_only" value="true"/>
+        <parameter key="use_file_extension_as_type" value="true"/>
+        <parameter key="content_type" value="txt"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="create_word_vector" value="true"/>
+        <parameter key="vector_creation" value="TF-IDF"/>
+        <parameter key="add_meta_information" value="true"/>
+        <parameter key="keep_text" value="true"/>
+        <parameter key="prune_method" value="percentual"/>
+        <parameter key="prune_below_percent" value="10.0"/>
+        <parameter key="prune_above_percent" value="100.0"/>
+        <parameter key="prune_below_rank" value="0.05"/>
+        <parameter key="prune_above_rank" value="0.95"/>
+        <parameter key="datamanagement" value="double_sparse_array"/>
+        <parameter key="data_management" value="auto"/>
+        <process expanded="true">
+          <connect from_port="document" to_port="document 1"/>
+          <portSpacing port="source_document" spacing="0"/>
+          <portSpacing port="sink_document 1" spacing="0"/>
+          <portSpacing port="sink_document 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="text:data_to_documents" compatibility="10.0.000" expanded="true" height="68" name="Data to Documents" width="90" x="179" y="136">
+        <parameter key="select_attributes_and_weights" value="true"/>
+        <list key="specify_weights">
+          <parameter key="text" value="1.0"/>
+        </list>
+      </operator>
+      <operator activated="true" class="loop_collection" compatibility="10.3.001" expanded="true" height="82" name="Loop Collection" width="90" x="313" y="136">
+        <parameter key="set_iteration_macro" value="false"/>
+        <parameter key="macro_name" value="iteration"/>
+        <parameter key="macro_start_value" value="1"/>
+        <parameter key="unfold" value="false"/>
+        <process expanded="true">
+          <operator activated="true" class="text:tokenize" compatibility="10.0.000" expanded="true" height="68" name="Tokenize" width="90" x="45" y="34">
+            <parameter key="mode" value="non letters"/>
+            <parameter key="characters" value=".:"/>
+            <parameter key="language" value="English"/>
+            <parameter key="max_token_length" value="3"/>
+          </operator>
+          <operator activated="true" class="text:filter_stopwords_english" compatibility="10.0.000" expanded="true" height="68" name="Filter Stopwords (English)" width="90" x="179" y="34"/>
+          <operator activated="true" class="text:transform_cases" compatibility="10.0.000" expanded="true" height="68" name="Transform Cases" width="90" x="179" y="136">
+            <parameter key="transform_to" value="lower case"/>
+          </operator>
+          <operator activated="true" class="text:filter_by_length" compatibility="10.0.000" expanded="true" height="68" name="Filter Tokens (by Length)" width="90" x="380" y="136">
+            <parameter key="min_chars" value="2"/>
+            <parameter key="max_chars" value="25"/>
+          </operator>
+          <operator activated="true" class="text:filter_stopwords_dictionary" compatibility="10.0.000" expanded="true" height="82" name="Filter Stopwords (Dictionary)" width="90" x="581" y="136">
+            <parameter key="file" value="C:\Users\ferna\OneDrive\Documentos\RapidMiner\Repositories\Practica3IA\diccionario.txt"/>
+            <parameter key="case_sensitive" value="false"/>
+            <parameter key="encoding" value="SYSTEM"/>
+          </operator>
+          <operator activated="true" class="text:stem_snowball" compatibility="10.0.000" expanded="true" height="68" name="Stem (Snowball)" width="90" x="581" y="34">
+            <parameter key="language" value="English"/>
+          </operator>
+          <connect from_port="single" to_op="Tokenize" to_port="document"/>
+          <connect from_op="Tokenize" from_port="document" to_op="Filter Stopwords (English)" to_port="document"/>
+          <connect from_op="Filter Stopwords (English)" from_port="document" to_op="Transform Cases" to_port="document"/>
+          <connect from_op="Transform Cases" from_port="document" to_op="Filter Tokens (by Length)" to_port="document"/>
+          <connect from_op="Filter Tokens (by Length)" from_port="document" to_op="Filter Stopwords (Dictionary)" to_port="document"/>
+          <connect from_op="Filter Stopwords (Dictionary)" from_port="document" to_op="Stem (Snowball)" to_port="document"/>
+          <connect from_op="Stem (Snowball)" from_port="document" to_port="output 1"/>
+          <portSpacing port="source_single" spacing="0"/>
+          <portSpacing port="sink_output 1" spacing="0"/>
+          <portSpacing port="sink_output 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="operator_toolbox:lda" compatibility="2.17.000" expanded="true" height="124" name="Extract Topics from Documents (LDA)" width="90" x="514" y="136">
+        <parameter key="number_of_topics" value="8"/>
+        <parameter key="show_optimization_settings" value="false"/>
+        <parameter key="use_alpha_heuristics" value="true"/>
+        <parameter key="alpha_sum" value="0.1"/>
+        <parameter key="use_beta_heuristics" value="true"/>
+        <parameter key="beta" value="0.01"/>
+        <parameter key="optimize_hyperparameters" value="true"/>
+        <parameter key="optimize_interval_for_hyperparameters" value="10"/>
+        <parameter key="iterations" value="1000"/>
+        <parameter key="top_words_per_topic" value="5"/>
+        <parameter key="stopword language" value="english"/>
+        <parameter key="reproducible" value="false"/>
+        <parameter key="enable_logging" value="false"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="include_meta_data" value="true"/>
+      </operator>
+      <connect from_op="Process Documents from Files" from_port="example set" to_op="Data to Documents" to_port="example set"/>
+      <connect from_op="Data to Documents" from_port="documents" to_op="Loop Collection" to_port="collection"/>
+      <connect from_op="Loop Collection" from_port="output 1" to_op="Extract Topics from Documents (LDA)" to_port="col"/>
+      <connect from_op="Extract Topics from Documents (LDA)" from_port="exa" to_port="result 1"/>
+      <connect from_op="Extract Topics from Documents (LDA)" from_port="top" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>
