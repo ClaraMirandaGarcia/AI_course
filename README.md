@@ -3,7 +3,7 @@ This repository showcases a collection of four practical projects applying Artif
 
 Each practice explores a different problem space, applying data-driven techniques and machine learning models with domain-appropriate tools.
 
-## 🔧 Practice 1: Driver Maneuver Detection – AI in the Automotive Industry
+## Practice 1: Driver Maneuver Detection – AI in the Automotive Industry
 Detecting and characterizing driving maneuvers from sensor-based data collected during driving sessions.
 
 * Goal: Identify characteristic sequences of atomic actions from vehicle signals for a selected driving maneuver.
@@ -16,7 +16,7 @@ Methods Used:
 3. Tools: Python, NumPy, Pandas, scikit-learn, Matplotlib
 4. Exploration of streaming-based learning with River
 
-## 🧬 Practice 2: Histopathological Image Classification – AI in Healthcare
+## Practice 2: Histopathological Image Classification – AI in Healthcare
 Deep Learning-based classification of medical images into tissue types and tumor detection.
 
 * Goal: Build both a multiclass and a binary classifier for colorectal histological tissue images.
@@ -35,7 +35,7 @@ Results:
 
 Tools: Python, TensorFlow, Keras, OpenCV, NumPy, Matplotlib
 
-## 🧾 Practice 3: Text Classification and Topic Modeling – AI in Business
+## Practice 3: Text Classification and Topic Modeling – AI in Business
 Supervised and unsupervised NLP techniques for business document classification and topic discovery.
 
 * Goal: Automatically classify and explore topics in a labeled text corpus.
@@ -50,7 +50,7 @@ Models Used:
 
 Tools: RapidMiner, Text Processing Extension, Operator Toolbox, Word2Vec plugin
 
-## 🏭 Practice 4: Sensor Anomaly Detection – AI for Industrial IoT
+## Practice 4: Sensor Anomaly Detection – AI for Industrial IoT
 Detecting anomalies in sensor data from industrial machinery for predictive maintenance.
 
 * Goal: Identify abnormal behavior in time-series sensor readings.
@@ -76,11 +76,11 @@ Methods:
 
 Tools: Python, scikit-learn, River (planned), Matplotlib, Seaborn
 
-# 🧩 Technologies Used Across Projects
+# Technologies Used Across Projects
 Area	Tools & Libraries
-🧠 ML/DL	TensorFlow, Keras, scikit-learn, River
-📊 Data Processing	NumPy, Pandas, OpenCV, Matplotlib, Seaborn
-📝 NLP	RapidMiner, Text Processing Extension, Word2Vec
+ML/DL	TensorFlow, Keras, scikit-learn, River
+Data Processing	NumPy, Pandas, OpenCV, Matplotlib, Seaborn
+NLP	RapidMiner, Text Processing Extension, Word2Vec
 📷 Imaging	EfficientNetB0, CNN, GlobalPooling, Dropout
 🔁 Streaming Models	River (Half-Space Trees, Incremental KMeans – WIP)
 
